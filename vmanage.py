@@ -48,6 +48,8 @@ def action_name(args):
 def action_vagrants(args):
     box = names[args.box]
     os.chdir(box)
+    # Close the shelf before doing this
+    store.close()
     call(["vagrant", args.action])
 
 
