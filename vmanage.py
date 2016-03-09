@@ -17,7 +17,7 @@ names = {}
 for v in vagrants:
     try:
         name = store[v]
-    except KeyError:
+    except:
         name = v
     names[name] = v
 
@@ -36,8 +36,8 @@ def check_is_vagrant(path):
 # Action for 'name' subparser
 def action_name(args):
     cd = os.getcwd()
-    is_vagrant = check_is_vagrant(cd)
-    if not is_vagrant:
+    v = check_is_vagrant(cd)
+    if not v:
         print("Must be in Vagrant directory")
         sys.exit(1)
     store[v] = args.name
@@ -53,7 +53,8 @@ def action_vagrants(args):
 
 # Set up the parser
 parser = argparse.ArgumentParser()
-subparsers = parser.add_subparsers()
+subparsers = parser.add_subparsers(dest="cmd")
+subparsers.required = True
 
 # Rename the current vagrant
 # Must be called from within a vagrant thing
